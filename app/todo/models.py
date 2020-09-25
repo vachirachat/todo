@@ -11,5 +11,6 @@ from pydantic import BaseModel
 class Todo(BaseModel):
     title: str
     detail: str
+    completed: bool
     duedate: datetime
     tags: List[str]

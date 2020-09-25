@@ -27,6 +27,10 @@ class Database:
         self.__data[id] = todo
         return id
 
+    def update(self, id, todo):
+        self.__data[id] = todo
+        return id
+
     def get(self, id):
         if id in self.__data:
             return self.__data[id]
@@ -38,18 +42,19 @@ class Database:
         else:
             return []
 
-    def search(self, q, tags):
+    def search(self, q, tags, completed=None):
         r = []
         tagset = set(tags)
         if len(self.__data) > 0:
-            if q == '' and len(tagset) == 0:
+            if q == '' and len(tagset) == 0 and completed is None:
                 r = list(self.__data.values())
             else:
                 for id in self.__data:
                     todo = self.__data[id]
+                    in_c = (completed is None) or (todo['completed'] == completed)
                     in_q = (q == '') or (q in todo['title']) or (q in todo['detail'])
                     in_t = (len(tagset) == 0) or (len(set(todo['tags']) & tagset) > 0)
-                    if in_q and in_t:
+                    if in_c and in_q and in_t:
                         r.append(todo)
         return r
 

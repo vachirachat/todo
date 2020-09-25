@@ -14,11 +14,18 @@ todo_services = APIRouter()
 
 
 @todo_services.get('/', response_model=List[Todo])
-async def search(q: str = '', t: str = ''):
+async def search(q: str = '', t: str = '', c: str = ''):
+    if c == '':
+        completed = None
+    else:
+        if c == '0':
+            completed = False
+        else:
+            completed = True
     tags = []
     if t != '':
         tags = t.split(sep=',')
-    return db.search(q, tags)
+    return db.search(q, tags, completed)
 
 
 @todo_services.get('/{id}', response_model=Todo)
