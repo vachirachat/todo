@@ -7,5 +7,6 @@ from fastapi import FastAPI
 from app.todo.services import todo_services
 
 
+print('Init todo-service version 0.2.2')
 app = FastAPI()
 app.include_router(todo_services)
