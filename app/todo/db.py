@@ -37,6 +37,7 @@ class Database:
                 redis_port = os.environ['REDIS_PORT']
             else:
                 redis_port = 6379
+            print('Connecting to Redis({}, {})'.format(redis_host, redis_port))
             self.__redis = redis.StrictRedis(host=redis_host, port=redis_port, db=0)
 
     def add(self, todo):
