@@ -51,6 +51,7 @@ class Database:
         return id
 
     def update(self, id, todo):
+        todo['id'] = id
         key = Database.to_key(id)
         payload = json.dumps(todo, default=str)
         self.__redis.set(key, payload)
