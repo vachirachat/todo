@@ -24,10 +24,12 @@ class Database:
     def add(self, todo):
         id = self.__last_id
         self.__last_id += 1
+        todo['id'] = id
         self.__data[id] = todo
         return id
 
     def update(self, id, todo):
+        todo['id'] = id
         self.__data[id] = todo
         return id
 
