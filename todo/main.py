@@ -1,4 +1,4 @@
-# app/todo/main.py
+# todo/main.py
 # Natawut Nupairoj
 # Department of Computer Engineering, Chulalongkorn University
 # Created for 2110415 Software Defined Systems
