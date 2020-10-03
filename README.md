@@ -5,5 +5,5 @@ It is created by Natawut Nupairoj for 2110415 Software Defined Systems at Depart
 ## Running
 
 ---
-python -m uvicorn --host=0.0.0.0 --port=8000 --reload app.todo.main:app
+python -m uvicorn --host=0.0.0.0 --port=8000 --reload todo.main:app
 ---

@@ -5,7 +5,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.todo.services import todo_services
+from todo.services import todo_services
 
 
 print('Init todo-service version 0.1.4')

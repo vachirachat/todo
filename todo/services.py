@@ -5,8 +5,8 @@
 
 from typing import List
 from fastapi import APIRouter, HTTPException
-from app.todo.models import Todo
-from app.todo.db import Database
+from todo.models import Todo
+from todo.db import Database
 
 
 db = Database.getInstance()

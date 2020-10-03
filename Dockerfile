@@ -4,10 +4,11 @@ WORKDIR /root
 COPY . /root/todo
 WORKDIR /root/todo
 
-RUN pip install poetry
-RUN poetry config virtualenvs.create false
-RUN poetry install
+# RUN pip install poetry
+# RUN poetry config virtualenvs.create false
+# RUN poetry install
+RUN  pip install -r requirements.txt
 
 EXPOSE 8000
-CMD  python -m uvicorn --host=0.0.0.0 --port=8000 --reload app.todo.main:app
+CMD  python -m uvicorn --host=0.0.0.0 --port=8000 --reload todo.main:app
 
