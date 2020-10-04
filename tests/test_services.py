@@ -2,10 +2,6 @@
 # Natawut Nupairoj
 # Department of Computer Engineering, Chulalongkorn University
 # Created for 2110415 Software Defined Systems
-import logging
-import os
-import sys
-
 import pytest
 from fastapi.testclient import TestClient
 from todo.main import app

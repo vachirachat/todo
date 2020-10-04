@@ -4,4 +4,3 @@ fastapi == 0.61.1
 uvicorn == 0.11.8
 redis
 pytest >= 5.3.5
-pytest-xprocess >= 0.15.0
