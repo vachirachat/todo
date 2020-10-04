@@ -1,11 +1,19 @@
-# app/todo/db.py
+# todo/db.py
 # Natawut Nupairoj
 # Department of Computer Engineering, Chulalongkorn University
 # Created for 2110415 Software Defined Systems
 
-import os
 import json
+import logging
+import os
+
 import redis
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+logger.addHandler(handler)
 
 
 class Database:
@@ -37,7 +45,7 @@ class Database:
                 redis_port = os.environ['REDIS_PORT']
             else:
                 redis_port = 6379
-            print('Connecting to Redis({}, {})'.format(redis_host, redis_port))
+            logger.info('Connecting to Redis({}, {})'.format(redis_host, redis_port))
             self.__redis = redis.StrictRedis(host=redis_host, port=redis_port, db=0)
 
     def add(self, todo):
@@ -75,25 +83,23 @@ class Database:
             return []
 
         tagset = set(tags)
+        r = []
         if q == '' and len(tagset) == 0 and completed is None:
             payloads = self.__redis.mget(keys)
-            print(type(payloads))
-            print(payloads)
-            r = []
             for payload in payloads:
                 data = json.loads(payload)
                 r.append(data)
-            return r
+        else:
+            for k in keys:
+                payload = self.__redis.get(k)
+                todo = json.loads(payload)
+                in_c = (completed is None) or (todo['completed'] == completed)
+                in_q = (q == '') or (q in todo['title']) or (q in todo['detail'])
+                in_t = (len(tagset) == 0) or (len(set(todo['tags']) & tagset) > 0)
+                if in_c and in_q and in_t:
+                    r.append(todo)
 
-        r = []
-        for k in keys:
-            payload = self.__redis.get(k)
-            todo = json.loads(payload)
-            in_c = (completed is None) or (todo['completed'] == completed)
-            in_q = (q == '') or (q in todo['title']) or (q in todo['detail'])
-            in_t = (len(tagset) == 0) or (len(set(todo['tags']) & tagset) > 0)
-            if in_c and in_q and in_t:
-                r.append(todo)
+        r.sort(key=lambda x: x['id'])
         return r
 
 
